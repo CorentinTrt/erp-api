@@ -1,0 +1,1 @@
+- Set content-type: application/json for all request at once (instead of setting for each request)
