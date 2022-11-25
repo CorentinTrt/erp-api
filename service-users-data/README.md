@@ -1,7 +1,5 @@
 ### Service Users Data _v0.0.1
 
-This is a submodule of erp/api
-
 ## Architecture & Principles
 ### SOLID
 We are using SOLID concept here
@@ -23,6 +21,7 @@ We are using SOLID concept here
   - res: response
   - s: serve / server
   - sig: signal
+  - v: valid / validate
   - w: writer
 
 ## Packages
