@@ -15,22 +15,10 @@ type Mongo struct {
 	*mongo.Client
 }
 
-// MongoCRUD is an interface to abstract and test the packages
-// type MongoCRUD interface {
-// 	FindMany(database, collection string, selector bson.D, options options.FindOptions, output interface{}) error
-// 	FindOne(database, collection string, selector bson.D, options options.FindOptions, output interface{}) error
-// 	InsertOne(database, collection string, options options.InsertOneOptions, insert interface{}) error
-// InsertMany(database, collection string, options options.InsertManyOptions, insert interface{}) error
-// Upsert(database, collection string, selector bson.D, options options.UpdateOptions, update interface{}) error
-// Update(database, collection string, selector bson.D, options options.UpdateOptions, update interface{}) error
-// Delete(database, collection string, options options.DeleteOptions, selector bson.D) error
-// }
-
 // MongoBasic extends crud functionality and adds client functions
 type MongoBasic interface {
 	PingServer() error
 	ConnectClient() error
-	// MongoCRUD
 }
 
 // NewMongoClient is a constructor for a mongo client, it has to connect outside
