@@ -19,7 +19,7 @@ type Users = M.Users
 
 // GetUsers function send to the client the list of all users
 func GetUsers(resWriter http.ResponseWriter, req *http.Request) {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	cursor, err := DB.UsersCol.Find(ctx, bson.M{})
