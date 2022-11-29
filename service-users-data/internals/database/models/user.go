@@ -18,7 +18,7 @@ type User struct {
 	Adress            adress   `bson:"adress" json:"adress"`
 	Salary            salary   `bson:"salary" json:"salary"`
 	Job               string   `bson:"job" json:"job" validate:"max=50"`
-	JoStatus          string   `bson:"job_status" json:"jobStatus" validate:"omitempty,oneof=Intern Extern"`
+	JoStatus          string   `bson:"job_status" json:"jobStatus" validate:"omitempty,oneof=intern extern"`
 	BeginingDate      int      `bson:"begining_date" json:"beginingDate"`
 	NextInterviewDate int      `bson:"next_interview_date" json:"nextInterviewDate"`
 	LastInterviewDate int      `bson:"last_interview_date" json:"lastInterViewDate"`
