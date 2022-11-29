@@ -3,20 +3,55 @@
 package services
 
 import (
+	"context"
 	"fmt"
 	"net/http"
+	"time"
 
+	DB "service-users-data/internals/database"
 	M "service-users-data/internals/database/models"
+
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 // CreateUser function insert a new user in the database
 func CreateUser(resWriter http.ResponseWriter, req *http.Request) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
 	nwUser := &M.User{}
 
 	err := nwUser.FromJSON(req.Body)
 	if err != nil {
 		http.Error(resWriter, "Internal Server Error - Unable to unmarshal data", http.StatusInternalServerError)
+		return
 	}
 
-	fmt.Printf("input: %#v", nwUser)
+	err = nwUser.Validate()
+	if err != nil {
+		http.Error(resWriter, fmt.Sprintf("Request Error - Wrong input: %s", err), http.StatusBadRequest)
+		return
+	}
+
+	selector := bson.D{bson.E{Key: "email", Value: nwUser.Email}}
+	err = DB.UsersCol.FindOne(ctx, selector).Decode([]map[string]interface{}{})
+
+	if err == mongo.ErrNoDocuments {
+		insertUser(ctx, nwUser)
+	} else if err != nil {
+		fmt.Println(err)
+		ctx.Done()
+	}
+
+	resWriter.Header().Set("Content-Type", "application/json")
+	nwUser.ToJSON(resWriter)
+}
+
+func insertUser(ctx context.Context, nwUser *M.User) {
+	_, err := DB.UsersCol.InsertOne(ctx, nwUser)
+
+	if err != nil {
+		ctx.Done()
+	}
 }
