@@ -42,6 +42,7 @@ func CreateUser(resWriter http.ResponseWriter, req *http.Request) {
 	} else if err != nil {
 		fmt.Println(err)
 		ctx.Done()
+		return
 	}
 
 	resWriter.Header().Set("Content-Type", "application/json")
