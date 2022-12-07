@@ -1,51 +1,20 @@
-### Service Users Data _v0.0.1
+# Service Users Data _v0.1.0
 
-## Architecture & Principles
-### SOLID
-We are using SOLID concept here
+## Development
+You can check on ./DEV.md to check development principles that i'm using on this project
 
-## Variables
-### Naming
-  - b: body
-  - cl: client
-  - col: collection
-  - cr: create
-  - ctx: context
-  - h: handler(s)
-  - l: log / logger
-  - nw: new
-  - mg: mongo
-  - r: router
-  - re: reader
-  - req: requestion
-  - res: response
-  - s: serve / server
-  - sig: signal
-  - v: valid / validate
-  - w: writer
+### Run the development environment
+  - We are using docker to run this service (api + db)
+  - There is a `dev.docker-compose.yml` in `erp-api` folder to run the service
+  - There is an hot-reload enabled on this service, so you don't need to rebuild containers when you make changes
 
-## Packages
-### Imports naming
-  - database: DB
-  - handlers: H
-  - models: M
-  - router: R
-  - services: S
-  - utils: U
+### Request the API
+  - The exported port for this service is 9090 on localhost
 
-## Folders
-### _v1
-Routes and Handler of the first version of the service
-Http related files
+### Visualize database
+  - Since we are using mongoDB for this service, we can use tools like Compass to visualize the database
+  - Because the service run in docker containers, we have to access with a specific IP adress
 
-### Build
-All deployement related files
-
-### Cmd
-Keep `main.go` file
-
-### Internals
-All internal logic files (workers, db-services, etc.)
-
-### Testing
-All tests related files
+To establish a connection with Compass:
+  1. Check the IP and the port of the database container : `$ docker inspect database-users-data`
+  2. Fill the connection string with the right username / password
