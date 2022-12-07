@@ -22,8 +22,8 @@ type MongoBasic interface {
 }
 
 // NewMongoClient is a constructor for a mongo client, it has to connect outside
-func NewMongoClient(mongoConn string) (*Mongo, error) {
-	client, err := mongo.NewClient(options.Client().ApplyURI(mongoConn))
+func NewMongoClient(mgConStr string) (*Mongo, error) {
+	client, err := mongo.NewClient(options.Client().ApplyURI(mgConStr))
 	if err != nil {
 		return nil, err
 	}
