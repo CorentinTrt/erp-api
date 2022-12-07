@@ -1,10 +1,10 @@
 // Package database regroup all database's related stuff
 package database
 
-import "go.mongodb.org/mongo-driver/mongo"
+import (
+	"os"
 
-const (
-	dbURI = "mongodb://localhost:27017"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 // MgCl is the mongodb client used by the service
@@ -27,7 +27,7 @@ func createCollections(mg *Mongo) {
 // InitDatabase will create a new MongoDB client, then connect that client and finally ping the server to check
 // if everything's fine
 func InitDatabase() error {
-	mgCl, err := NewMongoClient(dbURI)
+	mgCl, err := NewMongoClient(os.Getenv("DB_CON_STR"))
 	if err != nil {
 		return err
 	}
