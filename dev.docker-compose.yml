@@ -1,0 +1,25 @@
+version: '3.6'
+
+services:
+  mongo-users-data:
+    container_name: database-users-data
+    image: mongo:5.0
+    ports:
+      - 27018:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=cotrt
+      - MONGO_INITDB_ROOT_PASSWORD=qwerty
+  api-users-data:
+    container_name: service-users-data
+    image: erp_api-service-user-data
+    ports:
+      - 9090:9090
+    volumes:
+      - ./:/go/src/service-users-data
+    environment:
+      - DB_CON_STR=mongodb://cotrt:qwerty@mongo-users-data
+    build:
+      context: ./service-users-data
+      dockerfile: ./build/dev.Dockerfile
+
+
