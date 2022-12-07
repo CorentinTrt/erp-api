@@ -1,1 +1,3 @@
+- !!! Fix hot-reload
+- Fix issue with `create-user.go` "must be a pointer but got []"
 - Set content-type: application/json for all request at once (instead of setting for each request)
