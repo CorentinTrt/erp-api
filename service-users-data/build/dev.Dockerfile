@@ -1,17 +1,12 @@
 FROM golang:1.19
 
-# Copy application data into image
-COPY . go/src/service-users-data
-WORKDIR go/src/service-users-data
+RUN apt update && apt upgrade -y && \
+    apt install -y git \
+    make openssh-client
 
-COPY go.mod ./
-COPY go.sum ./
-RUN go mod download
+WORKDIR /app 
 
-COPY . .
+RUN curl -fLo install.sh https://raw.githubusercontent.com/cosmtrek/air/master/install.sh \
+    && chmod +x install.sh && sh install.sh && cp ./bin/air /bin/air
 
-# Install our third-party application for hot-reloading capability.
-RUN ["go", "get", "github.com/githubnemo/CompileDaemon"]
-RUN ["go", "install", "github.com/githubnemo/CompileDaemon"]
-
-ENTRYPOINT CompileDaemon -polling -log-prefix=false -build="go build ./cmd/service-users-data" -command="./service-users-data" -directory="."
+CMD air
