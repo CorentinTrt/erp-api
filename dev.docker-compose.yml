@@ -9,17 +9,19 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=cotrt
       - MONGO_INITDB_ROOT_PASSWORD=qwerty
+
   api-users-data:
     container_name: service-users-data
     image: erp_api-service-user-data
     ports:
       - 9090:9090
     volumes:
-      - ./:/go/src/service-users-data
+      - ./service-users-data:/app
     environment:
       - DB_CON_STR=mongodb://cotrt:qwerty@mongo-users-data
     build:
       context: ./service-users-data
       dockerfile: ./build/dev.Dockerfile
 
-
+volumes:
+  service-users-data:
