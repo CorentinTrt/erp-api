@@ -11,6 +11,13 @@ func UserRoutes() *chi.Mux {
 
 	userH := &UserH{}
 
+	// swagger:route GET /users User listUsers
+	// Return a list of all Users
+	//
+	// responses:
+	//	200: usersResponse
+	//  500: errorResponse
+	//  503: errorResponse
 	r.Get("/", userH.GetUsers)
 	r.Post("/", userH.CreateUser)
 
