@@ -1,0 +1,58 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "Documentation for Users' Data API",
+    "title": "Users' Data API",
+    "version": "0.1.0"
+  },
+  "basePath": "/v1",
+  "paths": {
+    "/users": {
+      "get": {
+        "description": "Return a list of all Users",
+        "tags": [
+          "User"
+        ],
+        "operationId": "listUsers",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/usersResponse"
+          },
+          "500": {
+            "$ref": "#/responses/errorResponse"
+          },
+          "503": {
+            "$ref": "#/responses/errorResponse"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "description": "User type define user object that will be stored in the DB",
+      "x-go-package": "service-users-data/internals/database/models"
+    }
+  },
+  "responses": {
+    "errorResponse": {
+      "description": "Generic error message returned as a string"
+    },
+    "usersResponse": {
+      "description": "A list of all Users",
+      "schema": {
+        "type": "array",
+        "items": {}
+      }
+    }
+  }
+}
