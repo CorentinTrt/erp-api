@@ -35,18 +35,25 @@ func CreateUser(resWriter http.ResponseWriter, req *http.Request) {
 	}
 
 	selector := bson.D{bson.E{Key: "email", Value: nwUser.Email}}
-	err = DB.UsersCol.FindOne(ctx, selector).Decode([]map[string]interface{}{})
+	result := DB.UsersCol.FindOne(ctx, selector)
+	err = result.Decode(nwUser)
 
 	if err == mongo.ErrNoDocuments {
 		insertUser(ctx, nwUser)
+
+		resWriter.Header().Set("Content-Type", "application/json")
+
+		nwUser.ToJSON(resWriter)
+		return
 	} else if err != nil {
-		fmt.Println(err)
+		http.Error(resWriter, fmt.Sprintf("Database Error - can't be reach: %s", err), http.StatusConflict)
+
 		ctx.Done()
 		return
 	}
 
-	resWriter.Header().Set("Content-Type", "application/json")
-	nwUser.ToJSON(resWriter)
+	http.Error(resWriter, fmt.Sprintf("Request Error - Duplicate user"), http.StatusConflict)
+
 }
 
 func insertUser(ctx context.Context, nwUser *M.User) {
