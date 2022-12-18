@@ -9,7 +9,9 @@ import (
 )
 
 // User type define user object that will be stored in the DB
+// swagger:model User
 type User struct {
+	// the firstname
 	FirstName         string   `bson:"first_name" json:"firstName" validate:"required,max=50"`
 	MiddleNames       []string `bson:"middle_names" json:"middleNames"`
 	LastName          string   `bson:"last_name" json:"lastName" validate:"required,max=50"`
@@ -65,4 +67,9 @@ func (u *User) ToJSON(w io.Writer) error {
 func (u *User) FromJSON(r io.Reader) error {
 	e := json.NewDecoder(r)
 	return e.Decode(u)
+}
+
+// GenericError is a generic error message returned by a server
+type GenericError struct {
+	Message string `json:"message"`
 }
